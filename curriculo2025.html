@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <title>Chat teste</title>
+</head>
+<body>
+    <section id="container">
+
+        <p id="status"></p>
+
+    <section class="chat">
+        <section class="chat__messages">
+
+            <div class="message--self">ola mundo!</div>
+
+            <div class="message-other">
+                <span class="message--sender">Cris Assistente</span>
+                Olá, Arthur
+            </div>
+
+        </section>
+
+        <form class="chat__form">
+         <input type="text" class="chat__input" id="message-input" placeholder="Digite uma mensagem" required /> 
+         <button type="submit" id="btnSubmit" class="chat__button" onclick="sendMessage()">
+            <span class="material-symbols-outlined">send</span>
+         </button>     
+        </form>
+    </section>
+</section>
+</body>
+
+<script>
+const apiKey=""
+
+function sendMessage(){
+    var message = document.getElementById('message-input')
+    if(!message.value)
+    {
+        message.style.border = '1px solid red'
+        return
+    }
+        message.style.border = 'none'
+
+        var status = document.getElementById('status')
+        var btnSubmit = document.getElementById('btnSubmit')
+
+        status.innerHTML = 'carregando...'
+        btnSubmit.disabled = true
+        btnSubmit.style.cursor = 'not-allowed'
+        message.disabled = true
+
+        fetch("https://api.openai.com/v1/completions",{
+            method:'POST',
+            headers: {
+                Accept:"application/json",
+                "Contet-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`
+            },
+            body:JSON.stringify({
+                moodel:"text-davinci-003",
+                prompt: message.value,
+                max_tokens: 2048,
+                temperature:0.5,
+            })
+        })
+}
+
+
+
+
+
+</script>
+</html>
